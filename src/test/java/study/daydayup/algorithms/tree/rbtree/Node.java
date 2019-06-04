@@ -12,7 +12,7 @@ public class Node {
     private final Node nil = new Node(-1);
 
     private int key = -1, color = BLACK;
-    private Node left, right, parent;
+    public Node left, right, parent;
 
     public Node(int key){
         this.key = key;
@@ -48,12 +48,14 @@ public class Node {
             return;
         }
 
-        parent = parent.parent;
-        this.exchangeChildren();
-        parent.parent = this;
-
         this.turnBlack();
         parent.turnRed();
+
+        this.exchangeChildren();
+
+        Node grandParent = parent.parent;
+        parent.parent = this;
+        parent = grandParent;
     }
 
     private void exchangeChildren() {
